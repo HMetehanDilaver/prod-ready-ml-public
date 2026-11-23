@@ -67,6 +67,8 @@ def _check_has_name(name: pd.Series) -> pd.Series:
         Unknown or not.
 
     """
+    if not isinstance(name, pd.Series):
+        raise TypeError("name must be a pandas Series")
     has_name = name.str.lower() != "unknown"
 
     return has_name  # Return the computed has_name series instead of modifying df.

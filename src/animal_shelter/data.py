@@ -29,6 +29,16 @@ def load_data(path):
 
 
 def convert_camel_case(name: str) -> str:
-    """Convert camelCaseString to snake_case_string."""
+    """Convert camelCaseString to snake_case_string.
+
+    Raises
+    ------
+    ValueError
+        If name is not a string.
+
+    """
+    if not isinstance(name, str):
+        raise TypeError("name must be a string")
+
     s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
