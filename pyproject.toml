@@ -1,0 +1,25 @@
+[project]
+name = "animal-shelter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "HMetehanDilaver", email = "halitmetehan.dilaver@ah.nl" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pandas>=3.1.1",
+]
+
+[project.scripts]
+animal-shelter = "animal_shelter:main"
+
+[build-system]
+requires = ["uv_build>=0.9.28,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1.1",
+    "ruff>=0.17.6",
+]
