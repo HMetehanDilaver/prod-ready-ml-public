@@ -1,17 +1,22 @@
+"""Feature engineering utilities for animal shelter data."""
+
 import numpy as np
 import pandas as pd
 
 
 def add_features(df):
     """Add some features to our data.
+
     Parameters
     ----------
     df : pandas.DataFrame
         DataFrame with data (see load_data)
+
     Returns
     -------
     with_features : pandas.DataFrame
         DataFrame with some column features added
+
     """
     df = df.copy()
     df["has_name"] = _check_has_name(df["name"])
@@ -24,16 +29,19 @@ def add_features(df):
     return df
 
 
-def _check_is_dog(animal_type):
+def _check_is_dog(animal_type: pd.Series) -> pd.Series:
     """Check if the animal is a dog, otherwise return False.
+
     Parameters
     ----------
     animal_type : pandas.Series
         Type of animal
+
     Returns
     -------
     result : pandas.Series
         Dog or not
+
     """
     # Check if it's either a cat or a dog.
     is_cat_dog = animal_type.str.lower().isin(["dog", "cat"])
@@ -45,32 +53,38 @@ def _check_is_dog(animal_type):
     return is_dog
 
 
-def _check_has_name(name):
+def _check_has_name(name: pd.Series) -> pd.Series:
     """Check if the animal is not called 'unknown'.
+
     Parameters
     ----------
     name : pandas.Series
         Animal name
+
     Returns
     -------
     result : pandas.Series
         Unknown or not.
+
     """
     has_name = name.str.lower() != "unknown"
 
     return has_name  # Return the computed has_name series instead of modifying df.
 
 
-def _get_sex(sex_upon_outcome):
+def _get_sex(sex_upon_outcome: pd.Series) -> pd.Series:
     """Determine if the sex was 'Male', 'Female' or unknown.
+
     Parameters
     ----------
     sex_upon_outcome : pandas.Series
         Sex and fixed state when coming in
+
     Returns
     -------
     sex : pandas.Series
         Sex when coming in
+
     """
     sex = pd.Series("unknown", index=sex_upon_outcome.index)
 
@@ -80,16 +94,19 @@ def _get_sex(sex_upon_outcome):
     return sex
 
 
-def _get_neutered(sex_upon_outcome):
+def _get_neutered(sex_upon_outcome: pd.Series) -> pd.Series:
     """Determine if an animal was intact or not.
+
     Parameters
     ----------
     sex_upon_outcome : pandas.Series
         Sex and fixed state when coming in
+
     Returns
     -------
     sex : pandas.Series
         Intact, fixed or unknown
+
     """
     neutered = sex_upon_outcome.str.lower()
     neutered.loc[neutered.str.contains("neutered")] = "fixed"
@@ -101,16 +118,19 @@ def _get_neutered(sex_upon_outcome):
     return neutered  # Return the neutered status instead of modifying df.
 
 
-def _get_hair_type(breed):
+def _get_hair_type(breed: pd.Series) -> pd.Series:
     """Get hair type of a breed.
+
     Parameters
     ----------
     breed : pandas.Series
         Breed of animal
+
     Returns
     -------
     hair_type : pandas.Series
         Hair type
+
     """
     hair_type = breed.str.lower()
     valid_hair_types = ["shorthair", "medium hair", "longhair"]
@@ -126,14 +146,17 @@ def _get_hair_type(breed):
 
 def _compute_days_upon_outcome(age_upon_outcome):
     """Compute age in days upon outcome.
+
     Parameters
     ----------
     age_upon_outcome : pandas.Series
         Age as string
+
     Returns
     -------
     days_upon_outcome : pandas.Series
         Age in days
+
     """
     # Age in days upon outcome.
 
